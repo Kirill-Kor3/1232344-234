@@ -39,7 +39,7 @@ const initialState: vacanciesState = {
   filteredItems: [],
   city: '',
   inputValue: '',
-  pills: ['TypeScript', 'React', 'Redux'],
+  pills: [],
   pillsInput: '',
 };
 

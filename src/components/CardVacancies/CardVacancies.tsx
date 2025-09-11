@@ -63,9 +63,11 @@ export const CardVacancies = ({ vacancy }) => {
                 Смотреть вакансию
               </Button>
             </Link>
-            <Button color="#E7E7E7" variant="filled" size="md">
-              Откликнуться
-            </Button>
+            <Link to={vacancy.alternate_url}>
+              <Button color="#E7E7E7" variant="filled" size="md">
+                Откликнуться
+              </Button>
+            </Link>
           </Group>
         </Card.Section>
       </Stack>

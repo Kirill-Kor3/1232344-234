@@ -9,18 +9,3 @@
   box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.menu__item_active {
-  color: black;
-
-}
-
-.menu__item_active::after {
-  content: ' ';
-  display: inline-block;
-  position: relative;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: #4263EB;
-  left: 10px;
-}

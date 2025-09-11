@@ -1,14 +1,17 @@
-import { Group, Pagination, Stack } from '@mantine/core';
+import { Group, Pagination, Stack, Tabs } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { fetchVacancies } from '../../store/reducers/VacanciesThunks';
 import { useTypedDispatch, useTypedSelector } from '../../hooks/redux';
 import { CardVacancies } from '../../components/CardVacancies/CardVacancies';
 import { Pills } from '../../components/Pills/Pills';
 import { SelectCity } from '../../components/SelectCity/SelectCity';
+import { setCity } from '../../store/reducers/VacanciesSlice';
+import { Link } from 'react-router';
 
 export const VacanciesList = ({ setSearchParams }) => {
   const data = useTypedSelector((state) => state.vacancies.vacancies?.items);
   const city = useTypedSelector((state) => state.vacancies.city);
+  const search = useTypedSelector((state) => state.vacancies.inputValue);
   const pills = useTypedSelector((state) => state.vacancies.pills);
   const dispatch = useTypedDispatch();
 
@@ -39,13 +42,22 @@ export const VacanciesList = ({ setSearchParams }) => {
     setPage(1);
   }, [city, pills]);
 
+  function changeCity(e) {
+    dispatch(setCity(e));
+  }
+
   return (
-    <Group align="flex-start" justify="space-between">
+    <Group gap='80px' align="flex-start" justify="space-between">
       <Stack>
         <Pills setSearchParams={setSearchParams} />
-        <SelectCity setSearchParams={setSearchParams} />
       </Stack>
-      <Stack align="flex-end" mt={20}>
+      <Stack align="flex-start" mt={20}>
+        <Tabs onChange={changeCity}>
+          <Tabs.List>
+            <Link to="/vacancies/moscow"><Tabs.Tab value="Москва">Москва</Tabs.Tab></Link>
+            <Link to="/vacancies/petersburg"><Tabs.Tab value="Санкт-Петербург">Санкт-Петербург</Tabs.Tab></Link>
+          </Tabs.List>
+        </Tabs>
         <Stack align="center">
           {/* {filterJobs.length !== 0
             ? filterJobs?.map((el) => <CardVacancies vacancy={el} />)
