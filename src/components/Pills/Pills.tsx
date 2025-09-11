@@ -22,37 +22,43 @@ export const Pills = ({ setSearchParams }) => {
   const search = useTypedSelector((state) => state.vacancies.inputValue);
   const dispatch = useTypedDispatch();
 
+  function addPill(e) {
+    e.preventDefault();
+
+    const normalized = value.trim();
+    if (!normalized || pills.includes(normalized)) return;
+
+    const nextPills = [...pills, normalized];
+
+    setSearchParams({
+      city: city,
+      vacancies: search,
+      pills: nextPills,
+    });
+
+    dispatch(addPills(normalized));
+    dispatch(changePillsInput(''));
+  }
+
   return (
     <Card mt={20} w={300}>
       <Stack>
         <Text>Ключевые навыки</Text>
         <Group justify="space-around">
-          <Input
-            value={value}
-            onChange={(e) => dispatch(changePillsInput(e.target.value))}
-          />
-          <ActionIcon
-            size="lg"
-            onClick={() => {
-              const normalized = value.trim();
-              if (!normalized || pills.includes(normalized)) return;
-
-              const nextPills = [...pills, normalized];
-
-              setSearchParams({
-                city: city,
-                vacancies: search,
-                pills: nextPills,
-              });
-
-              dispatch(addPills(normalized));
-              dispatch(changePillsInput(''));
-            }}
-            variant="filled"
-            aria-label="Settings"
-          >
-            <IconPlus />
-          </ActionIcon>
+          <form style={{ display: 'flex', gap: '20px' }} onSubmit={addPill}>
+            <Input
+              value={value}
+              onChange={(e) => dispatch(changePillsInput(e.target.value))}
+            />
+            <ActionIcon
+              size="lg"
+              type="submit"
+              variant="filled"
+              aria-label="Settings"
+            >
+              <IconPlus />
+            </ActionIcon>
+          </form>
         </Group>
         <Pill.Group>
           {pills.map((el) => (
